@@ -8,8 +8,4 @@ response = requests.post('http://127.0.0.1:5000/hellow/',
                          )
 
 print(response.status_code)
-answer = response.text
-answ = answer[5:].replace('}','')
-encoded = answ.encode('utf-8')
-
-print(encoded.decode('utf-8'))
+print(response.text)

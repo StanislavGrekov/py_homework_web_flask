@@ -9,7 +9,7 @@ def hellow():
     qs = request.args
     print(json_data,headers,qs)
 
-    return jsonify({'s': 'все'})
+    return jsonify({'answer': 'Ok!'})
 
 app.add_url_rule('/hellow/', view_func=hellow, methods=['POST', ])
 
