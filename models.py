@@ -9,4 +9,4 @@ Sessin = sessionmaker(bind=engin)
 
 Base = declarative_base(bind=engin)
 
-class Advertisement(Base):
+# class Advertisement(Base):
