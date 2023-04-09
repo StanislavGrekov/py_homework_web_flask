@@ -24,6 +24,9 @@ class Users(Base):
     first_name = Column(String(length=50))
     last_name = Column(String(length=50))
 
+    def __str__(self):
+        return f"{self.id}, {self.email}, {self.registration_date}, {self.password}, {self.first_name}, {self.last_name}"
+
 
 class Advertisement(Base):
 

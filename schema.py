@@ -27,3 +27,30 @@ class PatchUser(BaseModel):
             raise ValueError('password too short')
         return value
 
+class CreateAdvertisement(BaseModel):
+
+    title: str
+    description: str
+    email: EmailStr
+    password: str
+
+    @validator('title')
+    def validate_title(cls, value):
+        bad_word = ['Плохое слово1', 'Плохое слово2']
+        if value in bad_word:
+            raise ValueError('You add bads words')
+        return value
+
+class PatchAdvertisement(BaseModel):
+
+    title: Optional[str]
+    description: Optional[str]
+    email: EmailStr
+    password: Optional[str]
+
+    @validator('title')
+    def validate_title(cls, value):
+        bad_word = ['Плохое слово1', 'Плохое слово2']
+        if value in bad_word:
+            raise ValueError('You add bads words')
+        return value
