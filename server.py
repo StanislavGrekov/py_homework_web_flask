@@ -80,6 +80,7 @@ class UserVeiw(MethodView):
             json_data['password'] = hashed_password(json_data['password'])
         with Session() as session:
             user = get_user(user_id, session)
+
             for key, value in json_data.items():
                 setattr(user, key, value)
             try:
@@ -131,32 +132,41 @@ class AdvertisementVeiw(MethodView):
                     raise HttpError(404, 'User not found')
 
     def patch(self, adv_id):
-        json_data = validate(request.json, CreateAdvertisement)
+        json_data = validate(request.json, PatchAdvertisement)
         email = json_data['email']
         password = json_data['password']
         hash_password = hashed_password(password)
         with Session() as session:
-            title = json_data['title']
-            description = json_data['description']
             try:
-                credentials = session.query(Users).filter(Users.email == email, Users.password == hash_password).first()
-                if credentials:
-                    adv = session.query(Advertisement).filter(Advertisement.id == adv_id).update({"title" : title},
-                                                                                           {"description": description}).one()
-                    session.add(adv)
+                user = session.query(Users).filter(Users.email == email, Users.password == hash_password).first()
+                adv = session.query(Advertisement).filter(Advertisement.id == adv_id, Advertisement.id_user == user.id).first()
+                #session.query(Advertisement).filter(Advertisement.id == adv_id, Advertisement.id_user == user.id).update({'title' : json_data['title'],
+                #                                                                              'description': json_data['description']})
+                adv.title = json_data['title']
+                adv.description = json_data['description']
+                if user != None and adv !=None:
                     session.commit()
-            except AttributeError:
-                raise HttpError(404, 'User not found or password incorrect')
-            return jsonify({'status': 'Advertisement changed!'})
+                    return jsonify({'status': 'Advertisement changed!'})
+                else:
+                    raise HttpError(404, 'User credential incorrect or advertisement not found')
+            except:
+                raise HttpError(404, 'User credential incorrect or advertisement not found')
 
 
-    def delete(self, user_id):
+    def delete(self, adv_id):
+        json_data = validate(request.json, PatchAdvertisement)
+        email = json_data['email']
+        password = json_data['password']
+        hash_password = hashed_password(password)
         with Session() as session:
-            user = get_user(user_id, session)
-            session.delete(user)
-            session.commit()
-            return jsonify({'status': 'Ok!'})
-
+            try:
+                user = session.query(Users).filter(Users.email == email, Users.password == hash_password).first()
+                adv = session.query(Advertisement).filter(Advertisement.id == adv_id, Advertisement.id_user == user.id ).first()
+                session.delete(adv)
+                session.commit()
+                return jsonify({'status': 'Advertisement delete!'})
+            except:
+                raise HttpError(404, 'User credential incorrect or advertisement not found')
 
 
 
@@ -178,7 +188,7 @@ app.add_url_rule('/Advertisement/', # Получение всех объявле
                  view_func=AdvertisementVeiw.as_view('advertisement_get'),
                  methods=['GET'])
 
-app.add_url_rule('/Advertisement/<int:adv_id>',
+app.add_url_rule('/Advertisement/<int:adv_id>', # Изменение объявления, удаление
                  view_func=AdvertisementVeiw.as_view('advertisement_patch_delete'),
                  methods=['PATCH', 'DELETE', ])
 

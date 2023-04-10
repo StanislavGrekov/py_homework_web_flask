@@ -38,7 +38,7 @@ class CreateAdvertisement(BaseModel):
     def validate_title(cls, value):
         bad_word = ['Плохое слово1', 'Плохое слово2']
         if value in bad_word:
-            raise ValueError('You add bads words')
+            raise ValueError('You add bad words')
         return value
 
 class PatchAdvertisement(BaseModel):
@@ -52,5 +52,5 @@ class PatchAdvertisement(BaseModel):
     def validate_title(cls, value):
         bad_word = ['Плохое слово1', 'Плохое слово2']
         if value in bad_word:
-            raise ValueError('You add bads words')
+            raise ValueError('You add bad words')
         return value

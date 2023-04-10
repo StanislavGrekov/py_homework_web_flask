@@ -33,12 +33,11 @@ class Advertisement(Base):
     __tablename__ = 'advertisement'
 
     id = Column(Integer, primary_key=True)
-    id_user=Column(Integer, ForeignKey('users.id'), nullable=False)
+    id_user = Column(Integer, ForeignKey('users.id'), nullable=False)
     users = relationship(Users, backref='advertisement')
     title = Column(String(length=50))
-    description=Column(Text())
+    description = Column(Text())
     created_fild=Column(DateTime, server_default=func.now())
-
 
 Base.metadata.create_all()
 

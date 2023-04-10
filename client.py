@@ -1,8 +1,7 @@
 import requests
-import uuid
-from pprint import pprint
 
-########### Регистрация пользователя #############
+
+########## Регистрация пользователя #############
 
 # response = requests.post('http://127.0.0.1:5000/user',
 #                          json = {
@@ -17,11 +16,11 @@ from pprint import pprint
 # print(response.text)
 
 
-######### Создание объявления ###################
+######## Создание объявления ###################
 
 # response = requests.post('http://127.0.0.1:5000/Advertisement',
 #                          json = {
-#                             'email': 'semen@yandex.ru',
+#                             'email': 'ivanov@yandex.ru',
 #                             'password':'password_net',
 #                             'title': 'Продам стол',
 #                             'description':'хороший стол продаю',
@@ -30,52 +29,43 @@ from pprint import pprint
 #
 # print(response.status_code)
 # print(response.text)
+# #
 
-
-####### Получение всех объявлений ###################
-
+###### Получение всех объявлений ###################
+#
 # response = requests.get('http://127.0.0.1:5000/Advertisement')
 #
 # print(response.status_code)
 # print(response.text)
 
+
 ######### Изменить объявления ###################
 
-response = requests.patch('http://127.0.0.1:5000/Advertisement/4',
-                         json = {
-                            'email': 'semen@yandex.ru',
-                            'password':'password_net',
-                            'title': 'Объявление убрал',
-                            'description': 'Стол продал',
-                        }
-                        )
-
-print(response.status_code)
-print(response.text)
-
-
-
-
-
-
-
-# response = requests.patch('http://127.0.0.1:5000/user/1',
+# response = requests.patch('http://127.0.0.1:5000/Advertisement/8',
 #                          json = {
-#                          'password':'password',}
-#                          )
+#                             'email': 'ivanov@yandex.ru',
+#                             'password':'password_net',
+#                             'title': 'Плохое слово1',
+#                             'description': 'Стол продан',
+#                         }
+#                         )
 #
 # print(response.status_code)
 # print(response.text)
-#
 
-# response = requests.get('http://127.0.0.1:5000/user/3')
+#
+######### Удалить объявления ###################
+
+# response = requests.delete('http://127.0.0.1:5000/Advertisement/7',
+#                          json = {
+#                             'email': 'ivanov@yandex.ru',
+#                             'password':'password_net',
+#                         }
+#                         )
 #
 # print(response.status_code)
 # print(response.text)
 
 
 
-# response = requests.delete('http://127.0.0.1:5000/user/5')
-#
-# print(response.status_code)
-# print(response.text)
+
